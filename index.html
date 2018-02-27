@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
- 
+
 <head>
   <meta charset="utf-8">
   <title>React! React! React!</title>
@@ -8,23 +8,44 @@
   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 </head>
- 
+
+<style>
+  body {
+    padding: 10px;
+  }
+
+  p {
+    font-size: 3em;
+    color: pink;
+    font-family: verdana;
+    margin-left: 1em;
+  }
+  div {
+    color: orange;
+  }
+</style>
+
 <body>
-        <div id="container"></div>
+  <div id="container"></div>
   <script type="text/babel">
+
+// children that you want to pass into your component are accessed here via 'this.props.children'
+// when you want to render child elements, write them in the render method
 
       class HelloWorld extends React.Component {
         render() {
-            return <p>Hello, {this.props.greetTarget}!</p>
+            return <p>Hello, {this.props.greetTarget}. {this.props.positiveAdjective} name! <div>{this.props.children}</div></p>
     }
  
 }
       ReactDOM.render(
- <HelloWorld/>,
+ <HelloWorld greetTarget="Amber" positiveAdjective="Nice">
+ I like you
+ </HelloWorld>,
   document.querySelector("#container")
 );  
 
   </script>
 </body>
- 
+
 </html>
