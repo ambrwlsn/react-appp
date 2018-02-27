@@ -14,12 +14,13 @@
     padding: 10px;
   }
 
-  p {
-    font-size: 3em;
+  p, div {
+    font-size: 1.5em;
     color: pink;
     font-family: verdana;
     margin-left: 1em;
   }
+
   div {
     color: orange;
   }
@@ -32,13 +33,22 @@
 // children that you want to pass into your component are accessed here via 'this.props.children'
 // when you want to render child elements, write them in the render method
 
+// got the error 'Adjacent JSX elements must be wrapped in an enclosing tag' when trying to have the 'p' element and 'div' element sitting separately on their own. 
+// to fix the error, I wrapped everything in the return function in a div, but this leaves the DOM tree with a bit of divitis which I don't like
+
       class HelloWorld extends React.Component {
         render() {
-            return <p>Hello, {this.props.greetTarget}. {this.props.positiveAdjective} name! <div>{this.props.children}</div></p>
+            return (
+              <div>
+              <p>Hello, {this.props.greetTarget}. {this.props.positiveAdjective} name!</p>
+              <div>{this.props.children}</div>
+              </div>
+            );
     }
  
 }
       ReactDOM.render(
+        
  <HelloWorld greetTarget="Amber" positiveAdjective="Nice">
  I like you
  </HelloWorld>,
