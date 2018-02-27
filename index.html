@@ -14,12 +14,13 @@
     padding: 10px;
   }
 
-  p, div {
-    font-size: 1.5em;
+  /* p,
+  div {
+    font-size: 1.2em;
     color: pink;
     font-family: verdana;
     margin-left: 1em;
-  }
+  } */
 
   div {
     color: orange;
@@ -38,20 +39,40 @@
 
       class HelloWorld extends React.Component {
         render() {
+
+          var textStyle = {
+              fontSize: "16px",
+              color: "pink",
+              fontFamily: "verdana",
+              marginLeft: "1em"
+          };
+
+          // having a lot of trouble applying two styles to the same element
+          var divStyle = {
+              color: "this.props.color"
+          }
+
+
             return (
               <div>
-              <p>Hello, {this.props.greetTarget}. {this.props.positiveAdjective} name!</p>
-              <div>{this.props.children}</div>
+              <p style={textStyle}>Hello, {this.props.greetTarget}. {this.props.positiveAdjective} name!</p>
+              <div style={textStyle}>{this.props.children}</div>
               </div>
             );
     }
  
 }
       ReactDOM.render(
-        
- <HelloWorld greetTarget="Amber" positiveAdjective="Nice">
- I like you
- </HelloWorld>,
+        // a wrapping div is needed here, too. Argh!!!
+        // having a lot of trouble applying two styles to the same element
+        <div>
+            <HelloWorld greetTarget="Amber" positiveAdjective="Nice" style="textStyle" color="orange">
+            I like you
+            </HelloWorld>
+            <HelloWorld greetTarget="Sergej" positiveAdjective="Cool">
+            I like you
+            </HelloWorld>
+        </div>,
   document.querySelector("#container")
 );  
 
