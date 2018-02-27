@@ -74,35 +74,54 @@
 }
 
   // the same code used here as in 'Card' didn't render anything in the browser, but also didn't throw an error 
+
+  //definitely having a little trouble understanding the magic of props
+
   class Square extends React.Component {
     render () {
+      var squareStyle = {
+      height: 150,
+      backgroundColor: this.props.color
+    };
     
       return (
-        <br />
+        <div style={squareStyle}>
+        </div>
       );
     }
   }
 
   class Label extends React.Component {
     render () {
+          var labelStyle = {
+          fontFamily: "sans-serif",
+          fontWeight: "bold",
+          padding: 13,
+          margin: 0,
+          textAlign: "center"
+        };
       return (
-        <br />
+        <p style={labelStyle}>{this.props.color}</p>
       );
     }
   }
 
   class Card extends React.Component {
     render () {
-      var squareSpace = {
+      var cardStyle = {
         height: 200,
         width: 150,
         padding: 0,
+        marginBottom: 20,
         backgroundColor: "#FFF",
         WebkitFilter: "drop-shadow(0px 0px 5px #666)",
         filter: "drop-shadow(0px 0px 5px #666)"
         }
       return (
-          <div style={squareSpace}></div>
+          <div style={cardStyle}>
+            <Square color={this.props.color} />
+            <Label color={this.props.color}/>
+          </div>
       );
     }
   }
@@ -110,7 +129,7 @@
 
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
-        // having a lot of trouble applying two styles to the same element
+        // having a lot of trouble applying two styles to the same element (i.e in color="orange")
         <div>
             <HelloWorld greetTarget="Amber" positiveAdjective="Nice" style="textStyle" color="orange">
             I like you
@@ -118,10 +137,8 @@
             <HelloWorld greetTarget="Sergej" positiveAdjective="Cool">
             I like you
             </HelloWorld>
-            <Card>
-              <Square />
-              <Label />
-            </Card>
+            <Card color="#FF6663"/>
+            <Card color="#BAD455"/>
         </div>,
   document.querySelector("#container")
 );  
