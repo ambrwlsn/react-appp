@@ -22,9 +22,15 @@
     margin-left: 1em;
   } */
 
-  div {
+  /* div {
     color: orange;
-  }
+  } */
+
+  #container {
+      padding: 50px;
+      background-color: #FFF;
+    }
+
 </style>
 
 <body>
@@ -49,19 +55,33 @@
 
           // having a lot of trouble applying two styles to the same element
           var divStyle = {
-              color: "this.props.color"
+              fontSize: "16px",
+              color: "orange",
+              fontFamily: "verdana",
+              marginLeft: "1em",
+              marginBottom: "2em"
           }
 
 
             return (
               <div>
               <p style={textStyle}>Hello, {this.props.greetTarget}. {this.props.positiveAdjective} name!</p>
-              <div style={textStyle}>{this.props.children}</div>
+              <div style={divStyle}>{this.props.children}</div>
               </div>
             );
     }
  
 }
+
+  class Square extends React.Component {
+    render () {
+      return (
+        <div>Hi</div>
+      );
+    }
+  }
+
+
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
         // having a lot of trouble applying two styles to the same element
@@ -72,6 +92,7 @@
             <HelloWorld greetTarget="Sergej" positiveAdjective="Cool">
             I like you
             </HelloWorld>
+            <Square />
         </div>,
   document.querySelector("#container")
 );  
