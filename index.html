@@ -54,11 +54,13 @@
           };
 
           // having a lot of trouble applying two styles to the same element
+
+          //FIXED! This is done by 'spreading' the styles with JS Spread Syntax -https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
           var divStyle = {
-              fontSize: "16px",
+              // this has to come first in order for "orange" to take effect (cascading issue)
+              ...textStyle,
               color: "orange",
-              fontFamily: "verdana",
-              marginLeft: "1em",
               marginBottom: "2em"
           }
 
@@ -102,6 +104,7 @@
         };
       return (
         <p style={labelStyle}>{this.props.color}</p>
+        /*comment*/ // end of line comment
       );
     }
   }
@@ -126,6 +129,81 @@
     }
   }
 
+  class LightningCounter extends React.Component {
+    constructor(props, context) {
+      super(props, context);
+
+      this.state = {
+        strikes: 0
+      };
+
+      //the React docs are heavily in-favour of using bind - check out the docs
+      this.timerTick = this.timerTick.bind(this);
+      console.log(this.state);
+
+    }
+
+    //the first lifecycle method I wrote is below
+    componentDidMount() {
+      setInterval(this.timerTick, 1000);
+    }
+    
+
+    //this won't work - need to call the setState method (see correct timerTick function call below)
+    // timerTick() {
+    //   this.state.strikes += 100;
+    // }
+
+    //the way you wanna do a lot of updates in React is not by mutating existing data, but by providing a whole new instance of the data instead. Don't increment the existing value, but provide a new value
+
+    //this function has been re-written to make it clearer what the previous state is and that the function should update just the previous state and not confuse it with an older value than you think it might be referring to (see older function below)
+
+    //For performance-related reasons, React may decide to batch state updates in rapid succession. This could lead to the original value stored by this.state to be out-of-sync with reality. To help with this, the setState method gives you access to the previous state object via the prevState argument.
+    
+    //this is a CALLBACK FUNCTION
+      timerTick() {
+        this.setState((prevState) => {
+          return {
+            strikes: prevState.strikes + 1
+          };
+        });
+      }
+
+      // timerTick() {
+      //   this.setState({
+      //     strikes: this.state.strikes + 100
+      //   });
+      // }
+
+      render() {
+        return (
+          <h1>{this.state.strikes}</h1>
+          
+        );
+      }
+    }
+    
+ 
+    class LightningCounterDisplay extends React.Component {
+      render() {
+        var divStyle = {
+          width: 250,
+          textAlign: "center",
+          backgroundColor: "pink",
+          padding: 40,
+          fontFamily: "sans-serif",
+          color: "white",
+          borderRadius: 10
+        };
+ 
+        return (
+          <div style={divStyle}>
+            <LightningCounter/>
+          </div>
+        );
+      }
+    }
+
 
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
@@ -139,6 +217,8 @@
             </HelloWorld>
             <Card color="#FF6663"/>
             <Card color="#BAD455"/>
+            <Card color="#CCC"/>
+            <LightningCounterDisplay/>
         </div>,
   document.querySelector("#container")
 );  
