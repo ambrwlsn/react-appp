@@ -205,6 +205,26 @@
     }
 
 
+    class Circle extends React.Component {
+      render() {
+        var circleStyle = {
+          padding: 10,
+          margin: 20,
+          display: "inline-block",
+          backgroundColor: this.props.bgColor,
+          borderRadius: "50%",
+          width: 100,
+          height: 100
+        };
+ 
+        return (
+          <div style={circleStyle}>
+          </div>
+        );
+      }
+    }
+
+
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
         // having a lot of trouble applying two styles to the same element (i.e in color="orange")
@@ -219,6 +239,9 @@
             <Card color="#BAD455"/>
             <Card color="#CCC"/>
             <LightningCounterDisplay/>
+            <div>
+             <Circle bgColor="#F9C240" />
+            </div>
         </div>,
   document.querySelector("#container")
 );  
