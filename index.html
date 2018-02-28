@@ -224,6 +224,7 @@
       }
     }
 
+    var theCircle = <Circle bgColor="#F9C240" />;
 
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
@@ -240,7 +241,7 @@
             <Card color="#CCC"/>
             <LightningCounterDisplay/>
             <div>
-             <Circle bgColor="#F9C240" />
+             {theCircle}
             </div>
         </div>,
   document.querySelector("#container")
