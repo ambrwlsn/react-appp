@@ -224,7 +224,13 @@
       }
     }
 
-    var theCircle = <Circle bgColor="#F9C240" />;
+    function showCircle() {
+      var colours = ["red", "yellow", "green", "blue"];
+      var ran = Math.floor(Math.random() * colours.length);
+
+      // need square brackets around 'ran' here because colours is not a function, it is an array
+      return <Circle bgColor={colours[ran]} />;
+    }
 
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
@@ -241,7 +247,7 @@
             <Card color="#CCC"/>
             <LightningCounterDisplay/>
             <div>
-             {theCircle}
+             {showCircle()}
             </div>
         </div>,
   document.querySelector("#container")
