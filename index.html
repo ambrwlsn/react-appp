@@ -224,12 +224,21 @@
       }
     }
 
-    function showCircle() {
-      var colours = ["red", "yellow", "green", "blue"];
-      var ran = Math.floor(Math.random() * colours.length);
+    // function showCircle() {
+    //   var colours = ["red", "yellow", "green", "blue"];
+    //   var ran = Math.floor(Math.random() * colours.length);
 
-      // need square brackets around 'ran' here because colours is not a function, it is an array
-      return <Circle bgColor={colours[ran]} />;
+    //   // need square brackets around 'ran' here because colours is not a function, it is an array
+    //   return <Circle bgColor={colours[ran]} />;
+    // }
+
+    var colors = ["red", "yellow", "green", "blue", "purple", "pink", "grey"];
+
+    var renderData = [];
+
+    for (var i = 0; i < colors.length; i++) {
+      var color = colors[i];
+      renderData.push(<Circle key={i + color} bgColor={color} />);
     }
 
       ReactDOM.render(
@@ -247,7 +256,7 @@
             <Card color="#CCC"/>
             <LightningCounterDisplay/>
             <div>
-             {showCircle()}
+             {renderData}
             </div>
         </div>,
   document.querySelector("#container")
