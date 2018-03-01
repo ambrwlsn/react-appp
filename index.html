@@ -295,6 +295,8 @@ class WelcomeParent extends React.Component {
   };
 }
 
+//By relying on portals, we have direct access to any element in our page's DOM and can render content into it - bypassing the traditional parent/child hierarchy we've been living under so far!
+
 class Colorizer extends React.Component {
   constructor(props, context) {
   super(props, context);
@@ -363,6 +365,90 @@ class ColorLabel extends React.Component {
     }
 }
 
+class Counter extends React.Component {
+    render() {
+      var textStyle = {
+        fontSize: 72,
+        fontFamily: "sans-serif",
+        color: "#333",
+        fontWeight: "bold"
+      };
+
+      return (
+        <div style={textStyle}>
+          {this.props.display}
+        </div>
+      );
+    }
+  }
+
+  class CounterParent extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        count: 0
+      };
+      this.increase = this.increase.bind(this);
+      }
+
+      increase(e) {
+        var currentCount = this.state.count;
+
+        if (e.shiftKey) {
+            currentCount += 10
+        } else {
+            currentCount +=1;
+        }
+
+        this.setState({
+          count: currentCount
+        });
+        console.log(this);        
+      }
+
+
+    render() {
+      var backgroundStyle = {
+        padding: 50,
+        backgroundColor: "pink",
+        width: 250,
+        height: 100,
+        borderRadius: 10,
+        textAlign: "center"
+      };
+
+      var buttonStyle = {
+        fontSize: "1em",
+        width: 30,
+        height: 30,
+        fontFamily: "sans-serif",
+        color: "#333",
+        fontWeight: "bold",
+        lineHeight: "3px"
+      };
+
+      return (
+        <div style={backgroundStyle}>
+          <Counter display={this.state.count} />
+          <PlusButton clickHandler={this.increase} />
+        </div>
+      );
+    }
+  }
+
+  class PlusButton extends React.Component {
+      render () {
+          return (
+              <button onClick={this.props.clickHandler}>
+                +
+             </button>
+          )
+      }
+  }
+
+  // <button onClick={this.increase}> + </button> --> when this is taken away and the component above used instead, there is a different way to use event handlers
+
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
         // having a lot of trouble applying two styles to the same element (i.e in color="orange")
@@ -382,6 +468,7 @@ class ColorLabel extends React.Component {
              {renderData}
             </div>
             <WelcomeParent />
+            <CounterParent />
         </div>,
   document.querySelector("#container")
 );  
