@@ -29,11 +29,47 @@
   #container {
       padding: 50px;
       background-color: #FFF;
-    }
+  }
 
+      .colorSquare {
+      box-shadow: 0px 0px 25px 0px #333;
+      width: 242px;
+      height: 242px;
+      margin-bottom: 15px;
+    }
+ 
+    .colorArea input {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #CCC;
+    }
+ 
+    .colorArea button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      background-color: #666;
+      color: #FFF;
+      border: 2px solid #666;
+    }
+ 
+    .colorArea button:hover {
+      background-color: #111;
+      border-color: #111;
+      cursor: pointer;
+    }
+    #colorHeading {
+        padding: 0;
+        margin: 50px;
+        margin-bottom: -20px;
+        font-family: sans-serif;
+}
+  
 </style>
 
 <body>
+
+  <h1 id="colorHeading">Colorizer</h1>
   <div id="container"></div>
   <script type="text/babel">
 
@@ -241,10 +277,97 @@
       renderData.push(<Circle key={i + color} bgColor={color} />);
     }
 
+    class Welcome extends React.Component {
+  render () {
+  return  <h1>Hello, {this.props.haha}</h1> 
+    };
+}
+
+class WelcomeParent extends React.Component { 
+  render () {
+  return (
+    <div>
+      <Welcome haha="Sara" />
+      <Welcome haha="Cahal" />
+      <Welcome haha="Editeeee" />
+    </div>
+  );
+  };
+}
+
+class Colorizer extends React.Component {
+  constructor(props, context) {
+  super(props, context);
+
+    this.state = {
+      color: "",
+      bgColor: "white"
+    };
+
+    this.colorValue = this.colorValue.bind(this);
+    this.setNewColor = this.setNewColor.bind(this);
+  }
+
+  colorValue(e) {
+    this.setState({ 
+      color: e.target.value 
+    });
+  }
+
+  setNewColor(e) {
+    this.setState({
+      bgColor: this.state.color
+    });
+
+    this._input.focus();
+    this._input.value = "";
+
+    e.preventDefault();
+  }
+
+  render() {
+    var squareStyle = {
+      backgroundColor: this.state.bgColor
+    };
+
+    return (
+      <div className="colorArea">
+        <div style={squareStyle} className="colorSquare"></div>
+
+        <form onSubmit={this.setNewColor}>
+          <input onChange={this.colorValue}
+          //arrow functions deal with context well!!! - https://www.kirupa.com/react/accessing_dom_elements.htm
+            ref={ (el) =>  {
+               this._input = el;
+             }
+            }
+            placeholder="Enter a color value"></input>
+          <button type="submit">go</button>
+        </form>
+        <ColorLabel color={this.state.bgColor}/>
+      </div>
+    );
+  }
+}
+
+    function capitalise(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+class ColorLabel extends React.Component {
+    render() {
+        return ReactDOM.createPortal(
+            ": " + capitalise(this.props.color),
+            colorHeading
+        );
+    }
+}
+
       ReactDOM.render(
         // a wrapping div is needed here, too. Argh!!!
         // having a lot of trouble applying two styles to the same element (i.e in color="orange")
         <div>
+            <Colorizer />
             <HelloWorld greetTarget="Amber" positiveAdjective="Nice" style="textStyle" color="orange">
             I like you
             </HelloWorld>
@@ -258,6 +381,7 @@
             <div>
              {renderData}
             </div>
+            <WelcomeParent />
         </div>,
   document.querySelector("#container")
 );  
